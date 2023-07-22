@@ -1,24 +1,24 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 export const todoSlice = createSlice({
-  name: "todo",
+  name: 'todo',
   initialState: {
     todos: [
       {
-        id: "1",
-        item: "Complete online Javascript course",
+        id: '1',
+        item: 'Complete online Javascript course',
         isCompleted: true,
         isActive: false,
       },
       {
-        id: "2",
-        item: "Jog around the park 3x",
+        id: '2',
+        item: 'Jog around the park 3x',
         isCompleted: false,
         isActive: false,
       },
     ],
-    selectedFilter: "all", // Add selectedFilter to the initial state
-    status: "idle",
+    selectedFilter: 'all',
+    status: 'idle',
   },
   reducers: {
     setItems: (state, action) => {
@@ -26,9 +26,6 @@ export const todoSlice = createSlice({
     },
     clearCompleted: (state) => {
       state.todos = state.todos.filter((t) => !t.isCompleted);
-    },
-    deleteTodoItem: (state, action) => {
-      state.todos = state.todos.filter((t) => t.id !== action.payload);
     },
     addTodoItem: (state, action) => {
       state.todos.push({
@@ -49,7 +46,16 @@ export const todoSlice = createSlice({
     },
     setFilter: (state, action) => {
       state.selectedFilter = action.payload;
-    }, // Add setFilter action
+    },
+    moveTodo: (state, action) => {
+      const { dragIndex, hoverIndex } = action.payload;
+      const draggedTodo = state.todos[dragIndex];
+      state.todos.splice(dragIndex, 1);
+      state.todos.splice(hoverIndex, 0, draggedTodo);
+    },
+    deleteTodoItem: (state, action) => {
+      state.todos = state.todos.filter((t) => t.id !== action.payload);
+    },
   },
 });
 
@@ -59,6 +65,7 @@ export const {
   addTodoItem,
   setIsCompleted,
   setFilter,
+  moveTodo, 
   deleteTodoItem,
 } = todoSlice.actions;
 

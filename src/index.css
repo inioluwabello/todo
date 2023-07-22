@@ -144,8 +144,11 @@ input, button {
 .cb {
   border-image: none !important;
 }
-.todo-item {
+.light .todo-item {
   border-bottom: 1px solid var(--lt-light-grayish-blue);
+}
+.dark .todo-item {
+  border: 1px solid var(--dt-very-dark-grayish-blue-2);
 }
 .dark .todo-item {
   color: var(--dt-light-grayish-blue);

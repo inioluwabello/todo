@@ -32,8 +32,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Github](https://your-solution-url.com)
-- Live Site URL: [Vercel](https://your-live-site-url.com)
+- Solution URL: [Github](https://github.com/inioluwabello/todo)
+- Live Site URL: [Vercel](https://todo-two-ecru.vercel.app/)
 
 ## My process
 
@@ -50,7 +50,8 @@ Users should be able to:
 
 ### Useful resources
 
-- [My Color Space](https://mycolor.space/)
+- [My Color Space](https://mycolor.space/) - Gradient generator
+- [Chat GPT](https://chat.openai.com/) - I used this to optimize my code
 
 ## Author
 
