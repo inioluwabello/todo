@@ -55,12 +55,7 @@ const DraggableTodoItem = ({ todo, index }) => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="space-between">
-        <div
-          className="check-box"
-          onClick={() => {
-            dispatch(setIsCompleted(todo));
-          }}
-        >
+        <div className="check-box">
           {todo.isCompleted === true && <img src="/images/icon-check.svg" alt="check" />}
         </div>
         <div className={`flex-grow-1 item`}>{todo.item}</div>

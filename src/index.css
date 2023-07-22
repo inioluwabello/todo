@@ -42,7 +42,7 @@ input, button {
   background-color: var(--dt-very-dark-blue);
 }
 .content {
-  width: 450px;
+  max-width: 450px;
   margin: 0 auto;
   padding: 3em 2em 1em;
 }
@@ -123,12 +123,16 @@ input, button {
   padding: 0 .5em;
 }
 .check-box {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 16px !important;
   margin-right: 0.5em;
   cursor: pointer;
   text-align: center;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
 }
 .light .check-box {
   border: 1px solid var(--lt-light-grayish-blue);
@@ -193,4 +197,42 @@ button.active {
 }
 .item-count {
   font-size: 12px;
+}
+.mobile {
+  display: none;
+}
+.item,
+.input-box {
+  position: relative;
+  top: 2px;
+}
+
+@media(max-width: 600px) {
+  .content {
+    padding: 3em 1em 1em;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .filters {
+    text-align: center;
+  }
+  .filter-wrapper {
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 5px;
+    box-shadow: 0 4px 28px 13px rgb(0 0 0 / 6%);
+  }
+  .filter-wrapper button {
+    color: var(--dt-dark-grayish-blue);
+  }
+}
+.dark .filter-wrapper {
+  background-color: var(--dt-very-dark-desaturated-blue);
+}
+.light .filter-wrapper {
+  background-color: #ffffff;
 }
