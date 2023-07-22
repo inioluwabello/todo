@@ -1,18 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  todos: [{
-    id: "1",
-    item: "Complete online Javascript course",
-    isCompleted: true,
-    isActive: false
-  }],
-  status: 'idle',
-};
-
-export const counterSlice = createSlice({
+export const todoSlice = createSlice({
   name: "todo",
-  initialState,
+  initialState: {
+    todos: [{
+      id: "1",
+      item: "Complete online Javascript course",
+      isCompleted: true,
+      isActive: false
+    }],
+    status: 'idle',
+  },
   reducers: {
     setItems: (state, action) => {
         if (action.payload.todo.todos)
@@ -21,8 +19,8 @@ export const counterSlice = createSlice({
   }
 });
 
-export const { setItems } = counterSlice.actions;
+export const { setItems } = todoSlice.actions;
 
 export const selectTodos = (state) => state.todo.todos;
 
-export default counterSlice.reducer;
+export default todoSlice.reducer;
