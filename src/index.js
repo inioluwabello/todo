@@ -5,6 +5,7 @@ import { store } from './app/store';
 import App from './App';
 import './index.css';
 import { setItems } from './features/todo/todoSlice';
+import { setTheme } from './features/pageConfig/pageConfigSlice';
 
 const getTodosFromLocalStorage = () => {
   try { 
@@ -18,9 +19,10 @@ const getTodosFromLocalStorage = () => {
   }
 }
 
-const todos = getTodosFromLocalStorage()
-if(todos){
-  store.dispatch(setItems(todos))
+const persistedState = getTodosFromLocalStorage()
+if(persistedState){
+  store.dispatch(setItems(persistedState.todo.todos))
+  store.dispatch(setTheme(persistedState.page.theme))
 }
 
 const container = document.getElementById('root');

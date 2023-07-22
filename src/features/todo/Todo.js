@@ -1,74 +1,105 @@
-import { useSelector } from "react-redux";
-import { selectTodos } from "./todoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearCompleted,
+  selectFilter,
+  selectTodos,
+  setFilter,
+} from "./todoSlice";
 import TodoItem from "./TodoItem";
 import Header from "./Header";
 import AddItem from "./AddItem";
 import Footer from "./Footer";
-import { useState } from "react";
+import { useMemo } from "react";
 import { selectPageConfig } from "../pageConfig/pageConfigSlice";
 
 const TodoComponent = () => {
+  const dispatch = useDispatch();
   const pageConfig = useSelector(selectPageConfig);
-  
   const todos = useSelector(selectTodos);
-  const [filteredItems, setFilteredItems] = useState(todos);
-  const [selectedFilter, setSelectedFilter] = useState("all");
+  const selectedFilter = useSelector(selectFilter);
 
-  const filterItems = (c) => {
-    switch (c){
-      case "all":
-        setFilteredItems(todos);
-        break;
+  const filteredItems = useMemo(() => {
+    switch (selectedFilter) {
       case "active":
-        setFilteredItems(todos.filter(todo => todo.isActive === true))
-        break;
+        return todos.filter((todo) => todo.isActive === true);
       case "completed":
-        setFilteredItems(todos.filter(todo => todo.isCompleted === true))
-        break;
+        return todos.filter((todo) => todo.isCompleted === true);
       default:
-        return
-    };
-    setSelectedFilter(c);
-  }
+        return todos;
+    }
+  }, [todos, selectedFilter]);
 
   const getPendingItemsCount = () => {
-    const filter = todos.filter((todo) => todo.isCompleted === false);
-    return filter.length;
-  }
+    const pendingItems = filteredItems.filter((todo) => !todo.isCompleted);
+    return pendingItems.length;
+  };
 
   const PICount = getPendingItemsCount();
+
+  const filterItems = (filter) => {
+    dispatch(setFilter(filter));
+  };
+
   return (
     <section className={`container ${pageConfig.theme}`}>
       <Header />
 
       <main className="main">
-        <AddItem />
+        <div className="content">
+          <AddItem />
 
-        {filteredItems.map((todo) => {
-          return <TodoItem key={todo.id} todo={todo} />;
-        })}
-        <div className="items-footer space-between">
-          <div className="item-count">{`${PICount} item${PICount === 1 ? "" : "s"} left`}</div>
-          <ul className="filters">
-            <li>
-              <button 
-                onClick={() => filterItems('all')} 
-                className={`pointer ${selectedFilter === "all" ? "active" : ""}`}
-                >All</button>
-            </li>
-            <li>
-              <button 
-                onClick={() => filterItems('active')} 
-                className={`pointer ${selectedFilter === "active" ? "active" : ""}`}
-                >Active</button>
-            </li>
-            <li>
-              <button 
-                onClick={() => filterItems('completed')} 
-                className={`pointer ${selectedFilter === "completed" ? "active" : ""}`}
-                >Completed</button>
-            </li>
-          </ul>
+          <div className="items-container">
+            {filteredItems.map((todo) => {
+              return <TodoItem key={todo.id} todo={todo} />;
+            })}
+            <div className="items-footer space-between">
+              <div className="item-count">
+                {`${PICount} item${PICount === 1 ? "" : "s"} left`}
+              </div>
+
+              <ul className="filters">
+                <li>
+                  <button
+                    onClick={() => filterItems("all")}
+                    className={`pointer ${
+                      selectedFilter === "all" ? "active" : ""
+                    }`}
+                  >
+                    All
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => filterItems("active")}
+                    className={`pointer ${
+                      selectedFilter === "active" ? "active" : ""
+                    }`}
+                  >
+                    Active
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => filterItems("completed")}
+                    className={`pointer ${
+                      selectedFilter === "completed" ? "active" : ""
+                    }`}
+                  >
+                    Completed
+                  </button>
+                </li>
+              </ul>
+
+              <div className="clear-completed">
+                <button
+                  onClick={() => dispatch(clearCompleted())}
+                  className={`pointer`}
+                >
+                  Clear Completed
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
